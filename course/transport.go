@@ -39,7 +39,7 @@ func NewHttpClient(baseURL, token string) Transport {
 	}
 }
 
-func (c clientHttp) Get(id string) (*domain.Course, error) {
+func (c *clientHttp) Get(id string) (*domain.Course, error) {
 	dataResponse := DataResponse{Data: &domain.Course{}}
 
 	u := url.URL{}
@@ -52,7 +52,7 @@ func (c clientHttp) Get(id string) (*domain.Course, error) {
 		return nil, reps.Err
 	}
 
-	if reps.StatusCode > 404 {
+	if reps.StatusCode == 404 {
 		return nil, ErrNotFound{fmt.Sprintf("%s", reps)}
 	}
 

@@ -11,7 +11,7 @@ import (
 func main() {
 	userTransport := userSdk.NewHttpClient("http://localhost:8081", "")
 
-	user, err := userTransport.Get("fa81b5ab-de0b-4d9e-aabc-cb4fe0b58597")
+	user, err := userTransport.Get("fa81b5ab-de0b-4d9e-aabc-cb4fe0b587")
 	if err != nil {
 		if errors.As(err, &userSdk.ErrNotFound{}) {
 			fmt.Println("Not found:", err.Error())
