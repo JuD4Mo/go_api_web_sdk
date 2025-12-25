@@ -52,17 +52,17 @@ func (c *clientHttp) Get(id string) (*domain.Course, error) {
 		return nil, reps.Err
 	}
 
-	if reps.StatusCode == 404 {
-		return nil, ErrNotFound{fmt.Sprintf("%s", reps)}
-	}
-
-	if reps.StatusCode > 299 {
-		return nil, fmt.Errorf("%s", reps)
-	}
-
 	err := reps.FillUp(&dataResponse)
 	if err != nil {
 		return nil, err
+	}
+
+	if reps.StatusCode == 404 {
+		return nil, ErrNotFound{fmt.Sprintf("%s", dataResponse.Message)}
+	}
+
+	if reps.StatusCode > 299 {
+		return nil, fmt.Errorf("%s", dataResponse.Message)
 	}
 
 	return dataResponse.Data.(*domain.Course), nil
